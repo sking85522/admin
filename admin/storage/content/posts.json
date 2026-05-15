@@ -1,0 +1,10 @@
+[
+    {
+        "id": "1",
+        "title": "Welcome to JSON Admin",
+        "slug": "welcome",
+        "content": "This is your first post. You can edit or delete it from the admin panel.",
+        "status": "published",
+        "created_at": "2024-05-15 12:00:00"
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "id": "1",
+        "title": "About Us",
+        "slug": "about-us",
+        "content": "We are a cool company.",
+        "status": "published",
+        "created_at": "2024-05-15 12:00:00"
+    }
+]
