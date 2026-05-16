@@ -1,0 +1,110 @@
+<?php
+// admin/modules/posts/create.php
+
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!Csrf::verifyToken($_POST['csrf_token'])) {
+        die("Invalid CSRF token.");
+    }
+
+    $data = [
+        'title' => $_POST['title'] ?? '',
+        'slug' => $_POST['slug'] ?? '',
+        'content' => $_POST['content'] ?? '',
+        'status' => $_POST['status'] ?? 'draft',
+    ];
+
+    $validator = new Validator();
+    if ($validator->validate($data, [
+        'title' => 'required',
+        'slug' => 'required',
+        'content' => 'required'
+    ])) {
+        $data['created_at'] = date('Y-m-d H:i:s');
+
+        $db = new JsonDB(CONTENT_PATH . '/posts.json');
+        $db->insert($data);
+
+        Session::setFlash('success', 'Post created successfully.');
+        redirect(APP_URL . '/posts');
+    } else {
+        $errors = $validator->getErrors();
+    }
+}
+?>
+
+<div class="mb-6">
+    <div class="flex items-center">
+        <a href="<?= APP_URL ?>/posts" class="text-gray-500 hover:text-gray-700 mr-4"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-2xl font-semibold text-gray-900">Create Post</h1>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow overflow-hidden p-6">
+    <form action="" method="POST" class="space-y-6">
+        <?= Csrf::getTokenField() ?>
+
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+            <input type="text" name="title" id="title" value="<?= h($_POST['title'] ?? '') ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+            <?php if (isset($errors['title'])): ?>
+                <p class="mt-2 text-sm text-red-600"><?= h($errors['title'][0]) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+            <input type="text" name="slug" id="slug" value="<?= h($_POST['slug'] ?? '') ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+            <?php if (isset($errors['slug'])): ?>
+                <p class="mt-2 text-sm text-red-600"><?= h($errors['slug'][0]) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                <option value="draft" <?= (isset($_POST['status']) && $_POST['status'] === 'draft') ? 'selected' : '' ?>>Draft</option>
+                <option value="published" <?= (isset($_POST['status']) && $_POST['status'] === 'published') ? 'selected' : '' ?>>Published</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+            <textarea id="content" name="content" rows="10" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"><?= h($_POST['content'] ?? '') ?></textarea>
+            <?php if (isset($errors['content'])): ?>
+                <p class="mt-2 text-sm text-red-600"><?= h($errors['content'][0]) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit" class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                Save Post
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- TinyMCE Rich Text Editor -->
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#content',
+        plugins: 'lists link image code table',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | code',
+        height: 400,
+        menubar: false
+    });
+
+    // Auto-generate slug from title
+    document.getElementById('title').addEventListener('input', function() {
+        if (!document.getElementById('slug').dataset.manuallyEdited) {
+            let slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+            document.getElementById('slug').value = slug;
+        }
+    });
+
+    document.getElementById('slug').addEventListener('input', function() {
+        this.dataset.manuallyEdited = true;
+    });
+</script>

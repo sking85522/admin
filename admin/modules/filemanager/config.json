@@ -1,0 +1,6 @@
+{
+    "name": "File Manager",
+    "icon": "fas fa-folder-open",
+    "description": "Manage uploaded files.",
+    "version": "1.0.0"
+}

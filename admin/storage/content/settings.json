@@ -1,0 +1,12 @@
+[
+    {
+        "id": "1",
+        "key": "site_name",
+        "value": "My Awesome Site"
+    },
+    {
+        "id": "2",
+        "key": "site_description",
+        "value": "Just another JSON powered site."
+    }
+]
