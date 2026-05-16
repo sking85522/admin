@@ -54,6 +54,22 @@ $pageCount = count($pagesDb->getAll());
     </div>
 </div>
 
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Content Overview</h2>
+        <canvas id="contentChart" height="200"></canvas>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 flex flex-col justify-center items-center">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4 text-center">System Health</h2>
+        <div class="text-center">
+            <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+            <p class="text-gray-600">All systems operational.</p>
+            <p class="text-xs text-gray-400 mt-2">Running Portable Admin v1.0</p>
+        </div>
+    </div>
+</div>
+
 <div class="bg-white rounded-lg shadow p-6">
     <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -75,3 +91,34 @@ $pageCount = count($pagesDb->getAll());
         </a>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('contentChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Users', 'Posts', 'Pages'],
+            datasets: [{
+                data: [<?= $userCount ?>, <?= $postCount ?>, <?= $pageCount ?>],
+                backgroundColor: [
+                    '#3b82f6', // blue-500
+                    '#22c55e', // green-500
+                    '#a855f7'  // purple-500
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+});
+</script>
