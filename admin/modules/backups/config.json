@@ -1,0 +1,6 @@
+{
+    "name": "Backups",
+    "icon": "fas fa-database",
+    "description": "One-click DB backups.",
+    "version": "1.0.0"
+}

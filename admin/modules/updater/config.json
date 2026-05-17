@@ -1,0 +1,6 @@
+{
+    "name": "System Updates",
+    "icon": "fas fa-sync-alt",
+    "description": "OTA System Updates.",
+    "version": "1.0.0"
+}

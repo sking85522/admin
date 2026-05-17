@@ -13,6 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'slug' => $_POST['slug'] ?? '',
         'content' => $_POST['content'] ?? '',
         'status' => $_POST['status'] ?? 'draft',
+        'category' => $_POST['category'] ?? 'Uncategorized',
+        'meta_title' => $_POST['meta_title'] ?? '',
+        'meta_desc' => $_POST['meta_desc'] ?? ''
     ];
 
     $validator = new Validator();
@@ -61,12 +64,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         </div>
 
-        <div>
-            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-            <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
-                <option value="draft" <?= (isset($_POST['status']) && $_POST['status'] === 'draft') ? 'selected' : '' ?>>Draft</option>
-                <option value="published" <?= (isset($_POST['status']) && $_POST['status'] === 'published') ? 'selected' : '' ?>>Published</option>
-            </select>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                    <option value="draft" <?= (isset($_POST['status']) && $_POST['status'] === 'draft') ? 'selected' : '' ?>>Draft</option>
+                    <option value="published" <?= (isset($_POST['status']) && $_POST['status'] === 'published') ? 'selected' : '' ?>>Published</option>
+                </select>
+            </div>
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                <input type="text" name="category" id="category" value="<?= h($_POST['category'] ?? 'Uncategorized') ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+            </div>
         </div>
 
         <div>
@@ -75,6 +84,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if (isset($errors['content'])): ?>
                 <p class="mt-2 text-sm text-red-600"><?= h($errors['content'][0]) ?></p>
             <?php endif; ?>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">SEO Settings</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="meta_title" class="block text-sm font-medium text-gray-700">Meta Title</label>
+                    <input type="text" name="meta_title" id="meta_title" value="<?= h($_POST['meta_title'] ?? '') ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                </div>
+                <div>
+                    <label for="meta_desc" class="block text-sm font-medium text-gray-700">Meta Description</label>
+                    <textarea name="meta_desc" id="meta_desc" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"><?= h($_POST['meta_desc'] ?? '') ?></textarea>
+                </div>
+            </div>
         </div>
 
         <div class="flex justify-end">

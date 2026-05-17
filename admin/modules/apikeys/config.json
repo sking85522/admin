@@ -1,0 +1,6 @@
+{
+    "name": "API Keys",
+    "icon": "fas fa-key",
+    "description": "Manage external access tokens.",
+    "version": "1.0.0"
+}

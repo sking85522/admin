@@ -1,0 +1,6 @@
+{
+    "name": "Audit Logs",
+    "icon": "fas fa-list-alt",
+    "description": "System activity logs.",
+    "version": "1.0.0"
+}

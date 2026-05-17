@@ -1,0 +1,6 @@
+{
+    "name": "Forms",
+    "icon": "fas fa-clipboard-list",
+    "description": "Dynamic form builder.",
+    "version": "1.0.0"
+}
