@@ -1,0 +1,6 @@
+{
+    "name": "Roles",
+    "icon": "fas fa-user-shield",
+    "description": "Manage RBAC roles and permissions.",
+    "version": "1.0.0"
+}
