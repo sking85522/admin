@@ -12,6 +12,7 @@ require_once 'helper.php';
 require_once 'plugin.php'; // Load the new plugin architecture
 require_once 'lang.php';
 require_once 'updater.php';
+require_once 'webhook.php';
 
 class App {
     public static function init() {

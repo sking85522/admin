@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $db->update($id, $data);
 
+        if (class_ready('Webhook')) Webhook::fire('post.updated', array_merge(['id' => $id], $data));
+
         Session::setFlash('success', 'Post updated successfully.');
         redirect(APP_URL . '/posts');
     } else {

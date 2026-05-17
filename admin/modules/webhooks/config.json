@@ -1,0 +1,6 @@
+{
+    "name": "Webhooks",
+    "icon": "fas fa-satellite-dish",
+    "description": "Send POST requests on events.",
+    "version": "1.0.0"
+}

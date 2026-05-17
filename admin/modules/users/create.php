@@ -39,7 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($exists) {
             $errors['username'][] = 'Username already exists.';
         } else {
-            $db->insert($data);
+            $newId = $db->insert($data);
+
+            if (class_ready('Webhook')) {
+                // Don't send password hash in webhook!
+                $safeData = $data; unset($safeData['password']);
+                Webhook::fire('user.created', array_merge(['id' => $newId], $safeData));
+            }
+
             Session::setFlash('success', 'User created successfully.');
             redirect(APP_URL . '/users');
         }

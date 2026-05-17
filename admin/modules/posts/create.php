@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data['created_at'] = date('Y-m-d H:i:s');
 
         $db = new JsonDB(CONTENT_PATH . '/posts.json');
-        $db->insert($data);
+        $newId = $db->insert($data);
+
+        if (class_ready('Webhook')) Webhook::fire('post.created', array_merge(['id' => $newId], $data));
 
         Session::setFlash('success', 'Post created successfully.');
         redirect(APP_URL . '/posts');

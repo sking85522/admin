@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Invalid CSRF token.");
     }
 
-    $keysToUpdate = ['site_name', 'site_description', 'maintenance_mode', 'custom_css', 'custom_js', 'global_keywords', 'language'];
+    $keysToUpdate = ['site_name', 'site_description', 'maintenance_mode', 'require_2fa', 'custom_css', 'custom_js', 'global_keywords', 'language'];
 
     if (empty($_POST['site_name'])) {
         $errors['site_name'][] = "Site Name is required.";
@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($keysToUpdate as $key) {
             $value = $_POST[$key] ?? '';
             if ($key === 'maintenance_mode') $value = isset($_POST['maintenance_mode']) ? 'true' : 'false';
+            if ($key === 'require_2fa') $value = isset($_POST['require_2fa']) ? 'true' : 'false';
 
             $found = false;
             foreach ($settings as $setting) {
@@ -108,14 +109,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="space-y-6">
         <!-- System Status -->
-        <div class="bg-white rounded-lg shadow overflow-hidden p-6 border-t-4 border-red-500">
-            <h2 class="text-lg font-bold mb-4 border-b pb-2">System Status</h2>
+        <div class="bg-white rounded-lg shadow overflow-hidden p-6 border-t-4 border-red-500 space-y-4">
+            <h2 class="text-lg font-bold mb-2 border-b pb-2">System Status & Security</h2>
 
-            <label class="flex items-center p-3 border rounded <?= (isset($settingsData['maintenance_mode']) && $settingsData['maintenance_mode'] === 'true') ? 'bg-red-50 border-red-200' : 'bg-gray-50' ?>">
+            <label class="flex items-center p-3 border rounded <?= (isset($settingsData['maintenance_mode']) && $settingsData['maintenance_mode'] === 'true') ? 'bg-red-50 border-red-200' : 'bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors' ?>">
                 <input type="checkbox" name="maintenance_mode" value="true" class="h-5 w-5 text-red-600 rounded" <?= (isset($settingsData['maintenance_mode']) && $settingsData['maintenance_mode'] === 'true') ? 'checked' : '' ?>>
                 <div class="ml-3">
                     <span class="block text-sm font-bold text-gray-900">Maintenance Mode</span>
                     <span class="block text-xs text-gray-500">Take the public site offline.</span>
+                </div>
+            </label>
+
+            <label class="flex items-center p-3 border rounded <?= (isset($settingsData['require_2fa']) && $settingsData['require_2fa'] === 'true') ? 'bg-green-50 border-green-200' : 'bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors' ?>">
+                <input type="checkbox" name="require_2fa" value="true" class="h-5 w-5 text-green-600 rounded" <?= (isset($settingsData['require_2fa']) && $settingsData['require_2fa'] === 'true') ? 'checked' : '' ?>>
+                <div class="ml-3">
+                    <span class="block text-sm font-bold text-gray-900">Require 2FA Globally</span>
+                    <span class="block text-xs text-gray-500">Force all admins to use Two-Factor Auth.</span>
                 </div>
             </label>
         </div>

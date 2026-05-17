@@ -20,3 +20,7 @@ function jsonResponse($data, $statusCode = 200) {
     echo json_encode($data);
     exit;
 }
+
+function class_ready($class) {
+    return class_exists($class, false);
+}

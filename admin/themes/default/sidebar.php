@@ -55,6 +55,9 @@
                     <li><a href="<?= APP_URL ?>/audit" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-colors"><i class="fas fa-list-alt w-6 text-gray-400"></i> Audit Logs</a></li>
                 <?php endif; ?>
                 <?php if (Auth::hasPermission('manage_settings')): ?>
+                    <li><a href="<?= APP_URL ?>/webhooks" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-colors"><i class="fas fa-satellite-dish w-6 text-gray-400"></i> Webhooks</a></li>
+                <?php endif; ?>
+                <?php if (Auth::hasPermission('manage_settings')): ?>
                     <li><a href="<?= APP_URL ?>/downloader" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-colors"><i class="fab fa-github w-6 text-gray-400"></i> Git Downloader</a></li>
                 <?php endif; ?>
             </ul>
