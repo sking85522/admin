@@ -17,11 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Invalid CSRF token.");
     }
 
-    $keysToUpdate = ['site_name', 'site_description', 'maintenance_mode', 'require_2fa', 'custom_css', 'custom_js', 'global_keywords', 'language'];
-
-    if (empty($_POST['site_name'])) {
-        $errors['site_name'][] = "Site Name is required.";
-    }
+    // Removed 'site_name' from user-updatable fields to protect Tech Elevate X branding
+    $keysToUpdate = ['site_description', 'maintenance_mode', 'require_2fa', 'custom_css', 'custom_js', 'global_keywords', 'language'];
 
     if (empty($errors)) {
         foreach ($keysToUpdate as $key) {
@@ -64,11 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="text-lg font-bold mb-4 border-b pb-2">General</h2>
             <div class="space-y-4">
                 <div>
-                    <label for="site_name" class="block text-sm font-medium text-gray-700">Site Name</label>
-                    <input type="text" name="site_name" id="site_name" value="<?= h($settingsData['site_name'] ?? '') ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
-                    <?php if (isset($errors['site_name'])): ?>
-                        <p class="mt-2 text-sm text-red-600"><?= h($errors['site_name'][0]) ?></p>
-                    <?php endif; ?>
+                    <label class="block text-sm font-medium text-gray-700">Site Name (Immutable)</label>
+                    <input type="text" disabled value="<?= h(PANEL_NAME) ?> by <?= h(COMPANY_NAME) ?>" class="mt-1 block w-full border border-gray-200 bg-gray-50 rounded-md shadow-sm py-2 px-3 sm:text-sm text-gray-500 cursor-not-allowed">
+                    <p class="text-xs text-gray-400 mt-1">Managed by your hosting provider.</p>
                 </div>
 
                 <div>

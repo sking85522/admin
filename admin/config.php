@@ -1,7 +1,13 @@
 <?php
 // admin/config.php
 
-define('APP_NAME', 'Admin Panel');
+// Hardcoded Company Branding (Immutable)
+define('COMPANY_NAME', 'Tech Elevate X');
+define('COMPANY_URL', 'https://techelevatex.in');
+define('PANEL_NAME', 'X Admin Panel');
+define('PANEL_URL', 'https://xadminpanel.techelevatex.in');
+
+define('APP_NAME', PANEL_NAME);
 define('APP_VERSION', '1.0.0'); // Base version for Updater module
 
 // Dynamically determine the base URL to make it truly portable

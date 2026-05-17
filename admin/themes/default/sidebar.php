@@ -1,7 +1,7 @@
 <div class="bg-gray-800 text-white w-64 flex-shrink-0 h-screen flex flex-col hidden md:flex transition-all duration-300" id="sidebar">
     <div class="flex items-center justify-center h-16 bg-gray-900 border-b border-gray-700">
-        <a href="<?= APP_URL ?>" class="text-xl font-bold text-white hover:text-gray-300 transition-colors">
-            <i class="fas fa-cube mr-2"></i> <?= h(APP_NAME) ?>
+        <a href="<?= PANEL_URL ?>" target="_blank" class="text-xl font-bold text-white hover:text-gray-300 transition-colors tracking-wide">
+            <i class="fas fa-bolt text-primary mr-2"></i> <?= PANEL_NAME ?>
         </a>
     </div>
 
