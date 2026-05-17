@@ -1,0 +1,6 @@
+{
+    "name": "Git Downloader",
+    "icon": "fab fa-github",
+    "description": "Download Github Repositories via Zip.",
+    "version": "1.0.0"
+}
